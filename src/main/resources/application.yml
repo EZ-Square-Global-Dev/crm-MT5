@@ -14,6 +14,11 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+#  flyway: # migration
+#    enabled: true
+#    baseline-on-migrate: true
+#    locations: classpath:migration
+#    validate-on-migrate: true
 
   jpa:
     hibernate:
@@ -27,7 +32,22 @@ spring:
     user:
       name: admin
       password: admin
-
+  data:
+    redis:
+      password: redis
+      port: 6379
+      host: localhost
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your_email@gmail.com
+    password: your_app_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 springdoc:
   show-actuator: false
   api-docs:
@@ -37,6 +57,10 @@ springdoc:
   swagger-ui:
     disable-swagger-default-url: true
     path: /swagger-ui.html
+
+jwt:
+  secret: ez2secret-123456789012345678901234
+  expire: 100000000
 
 thread-pool:
   core-pool-size: ${THREADPOOL_CORE:4}

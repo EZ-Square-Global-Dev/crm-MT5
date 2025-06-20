@@ -65,15 +65,19 @@ jobs:
         BRANCH=${{ github.ref_name }}
         TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
 
-        TEXT="✅ *CI/CD Pipeline Result:*\n
-    - Status: *$STATUS*\n
-    - Commit: \`$COMMIT\`\n
-    - Branch: \`$BRANCH\`\n
-    - By: *$ACTOR*\n
-    - Time: $TIME"
+        TEXT=$(cat <<EOF
+✅ *CI/CD Pipeline Result:*
+
+- Status: *$STATUS*
+- Commit: \`$COMMIT\`
+- Branch: \`$BRANCH\`
+- By: *$ACTOR*
+- Time: $TIME
+EOF
+)
 
         PAYLOAD=$(jq -n --arg text "$TEXT" '{ text: $text }')
 
         curl -H "Content-Type: application/json" \
              -d "$PAYLOAD" \
-             ${{ secrets.TEAMS_WEBHOOK_URL }}
+             "${{ secrets.TEAMS_WEBHOOK_URL }}"

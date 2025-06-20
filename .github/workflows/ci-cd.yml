@@ -81,5 +81,5 @@ jobs:
 
         curl -H "Content-Type: application/json" \
              -d "$PAYLOAD" \
-             "${{ secrets.TEAMS_WEBHOOK_URL }}"
+             ${{ secrets.TEAMS_WEBHOOK_URL }}
 

@@ -58,26 +58,28 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Send notification to Microsoft Teams
+      shell: bash
       run: |
         COMMIT=${GITHUB_SHA::7}
-        STATUS=${{ job.status }}
-        ACTOR=${{ github.actor }}
-        BRANCH=${{ github.ref_name }}
+        STATUS="${{ job.status }}"
+        ACTOR="${{ github.actor }}"
+        BRANCH="${{ github.ref_name }}"
         TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
 
-        TEXT=$(cat <<EOF
-✅ *CI/CD Pipeline Result:*
+        TEXT=$(cat <<'EOF'
+        ✅ *CI/CD Pipeline Result:*
 
-- Status: *$STATUS*
-- Commit: \`$COMMIT\`
-- Branch: \`$BRANCH\`
-- By: *$ACTOR*
-- Time: $TIME
-EOF
-)
+        - Status: *'"$STATUS"'*
+        - Commit: \`'"$COMMIT"'\`
+        - Branch: \`'"$BRANCH"'\`
+        - By: *'"$ACTOR"'*
+        - Time: '"$TIME"'
+        EOF
+        )
 
-        PAYLOAD=$(jq -n --arg text "$TEXT" '{ text: $text }')
+        PAYLOAD=$(echo "{\"text\": \"$TEXT\"}")
 
         curl -H "Content-Type: application/json" \
              -d "$PAYLOAD" \
              "${{ secrets.TEAMS_WEBHOOK_URL }}"
+

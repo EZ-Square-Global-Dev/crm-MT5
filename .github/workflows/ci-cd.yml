@@ -47,7 +47,7 @@ jobs:
 
     - name: Build, tag, and push Docker image to ECR
       env:
-        ECR_REGISTRY: 96854635475.dkr.ecr.ap-southeast-1.amazonaws.com
+        ECR_REGISTRY: 968548635475.dkr.ecr.ap-southeast-1.amazonaws.com
         ECR_REPOSITORY: crm-prop-backend
         IMAGE_TAG: latest
       run: |

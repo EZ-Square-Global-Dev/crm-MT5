@@ -58,6 +58,7 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Send notification to Microsoft Teams
+      if: always()
       shell: bash
       run: |
         COMMIT=${GITHUB_SHA::7}

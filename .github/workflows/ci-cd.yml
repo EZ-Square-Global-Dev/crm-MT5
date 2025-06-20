@@ -68,13 +68,8 @@ jobs:
         TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
         REPO="${{ github.repository }}"
         MESSAGE=$(git log -1 --pretty=%B)
-        if [[ "$RESULT" == "success" ]]; then
-          ICON="✅"
-        else
-          ICON="❌"
-        fi
 
-        TEXT="$ICON *CI/CD Pipeline Summary*\n\n"
+        TEXT="📋 *CI/CD Pipeline Summary*\n\n"
         TEXT+="| Key       | Value                    |\n"
         TEXT+="|-----------|---------------------------|\n"
         TEXT+="| 📦 Repo   | \`$REPO\`                 |\n"

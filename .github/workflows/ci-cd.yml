@@ -67,13 +67,20 @@ jobs:
         BRANCH="${{ github.ref_name }}"
         TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
         REPO="${{ github.repository }}"
+        MESSAGE=$(git log -1 --pretty=%B)
+        if [[ "$STATUS" == "success" ]]; then
+          ICON="✅"
+        else
+          ICON="❌"
+        fi
 
-        TEXT="✅ *CI/CD Pipeline Summary*\n\n"
+        TEXT="$ICON *CI/CD Pipeline Summary*\n\n"
         TEXT+="| Key       | Value                    |\n"
         TEXT+="|-----------|---------------------------|\n"
         TEXT+="| 📦 Repo   | \`$REPO\`                 |\n"
         TEXT+="| 🔖 Status | *$STATUS*                |\n"
         TEXT+="| 🧱 Commit | \`$COMMIT\`               |\n"
+        TEXT+="| 📝 Message| $MESSAGE                |\n"
         TEXT+="| 🌿 Branch | \`$BRANCH\`               |\n"
         TEXT+="| 👤 By     | $ACTOR                  |\n"
         TEXT+="| 🕒 Time   | $TIME                   |"

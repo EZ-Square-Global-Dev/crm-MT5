@@ -65,13 +65,17 @@ jobs:
         ACTOR="${{ github.actor }}"
         BRANCH="${{ github.ref_name }}"
         TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
+        REPO="${{ github.repository }}"
 
-        TEXT="✅ CI/CD Pipeline Result:\n\n"
-        TEXT+="• Status: *$STATUS*\n"
-        TEXT+="• Commit: \`$COMMIT\`\n"
-        TEXT+="• Branch: \`$BRANCH\`\n"
-        TEXT+="• By: *$ACTOR*\n"
-        TEXT+="• Time: $TIME"
+        TEXT="✅ *CI/CD Pipeline Summary*\n\n"
+        TEXT+="| Key       | Value                    |\n"
+        TEXT+="|-----------|---------------------------|\n"
+        TEXT+="| 📦 Repo   | \`$REPO\`                 |\n"
+        TEXT+="| 🔖 Status | *$STATUS*                |\n"
+        TEXT+="| 🧱 Commit | \`$COMMIT\`               |\n"
+        TEXT+="| 🌿 Branch | \`$BRANCH\`               |\n"
+        TEXT+="| 👤 By     | $ACTOR                  |\n"
+        TEXT+="| 🕒 Time   | $TIME                   |"
 
         JSON_TEXT=$(echo "$TEXT" | sed ':a;N;$!ba;s/\n/\\n/g')
         PAYLOAD="{\"text\": \"$JSON_TEXT\"}"
@@ -79,4 +83,3 @@ jobs:
         curl -s -X POST -H "Content-Type: application/json" \
             -d "$PAYLOAD" \
             "https://ezsqtech.webhook.office.com/webhookb2/89b3206d-cbd9-4556-a054-01d169bff33d@b2502d42-2f36-42a0-b119-5b945377fc74/IncomingWebhook/d5fa832e55294779aacd0faa7f6a94f0/e0706eb2-069f-47c0-8b50-13603d5c4950/V2KsAffiBy5-TbuExz4vsj3iHLmlzF5ws_7r7ZrMr5TDg1"
-
